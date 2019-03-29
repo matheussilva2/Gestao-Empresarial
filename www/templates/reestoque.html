@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Argila Mais - Estoque</title>
+		<title>Argila Mais - Gestor de Estoque</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		
+		<style type="text/css">
+			.formulario{
+			padding: 15px;
+			font-size: 16px;
+			width: 100%;
+			max-width: 350px;
+			margin-top: 30px;
+			}
+			.input-group{
+				margin-bottom: 15px;
+			}
+		</style>
 	</head>
 	<body class="bg-light">
 		<header class="navbar navbar-expand-lg bg-success navbar-dark p-0 p-lg-2">
-			<h1 class="navbar-brand d-none d-lg-inline">Argila Mais - Estoque</h1>
+			<h1 class="navbar-brand d-none d-lg-inline">Argila Mais</h1>
 
 			<button class="navbar-toggler m-2" type="button" data-toggle="collapse" data-target="#navMobile">
 			<span class="navbar-toggler-icon"></span>
 			</button>
 			<nav id="navMobile" class="collapse navbar-collapse">
-				<img alt="imagem do usuário" src="../galeria/default-user.png" class="rounded-circle m-4 text-white d-block d-xl-none" width="20%">
-				<ul class="navbar-nav w-100 list-unstyled">
+				<img alt="imagem do usuário" src="../galeria/default-user.png" class="rounded-circle m-4 text-white" width="20%">
+				<ul class="navbar-nav w-100">
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Início</a></li>
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Registro de Ponto</a></li>
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Minhas Vendas</a></li>
@@ -25,31 +36,27 @@
 				</ul>
 			</nav>
 		</header>
-		<div class="container-fluid mx-0 mx-md-auto py-5">
-			<h1 class="text-center mb-4">Estoque</h1>
-			<table class="table table-hover table-light">
-				<thead>
-					<tr>
-						<th>Código</th>
-						<th>Nome</th>
-						<th>Preço Custo</th>
-						<th>Preço Venda</th>
-						<th>Qtd</th>
-					</tr>
-				</thead>
-				<tbody>
-				<tr class="stock-row">
-					<td>1</td>
-					<td>Sabonete de Argila Preta Wedical 90g</td>
-					<td>R$3,00</td>
-					<td>R$15,00</td>
-					<td>87</td>
-				</tr>
-				</tbody>
-			</table>
+		<h2 class="text-center mt-5">Gestão de Estoque</h2>
+		<div class="container-fluid">
+			<form class="formulario" action="#">
+				<label class="w-100 text-center display-4">Produto</label>
+				<select class="bg-light w-100 h5" id="produtos">
+					<option value="113">Argila Branca</option>
+					<option value="113">Argila Verde</option>
+					<option value="113">Argila Amarela</option>
+					<option value="113">Sabonete de Argila Verde</option>
+					<option value="113">Sabonete de Argila Amarela</option>
+					<option value="113">Sabonete de Argila Branca</option>
+					<option value="113">Óleo de Coco</option>
+					<option value="113">Sabonete Íntimo</option>
+				</select>
+				<label class="w-100 text-center display-4">Quantidade</label>
+				<input type="number" min="0" class="text-center bg-light w-100 mb-4"required />
+				<input type="submit" value="ENVIAR" class="btn btn-success btn-lg w-100">
+			</form>
 		</div>
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</body>
+	</body>
 </html>
