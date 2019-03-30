@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Argila Mais - Registro de Vendas</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	</head>
+	<body class="bg-light">
+		<header class="navbar navbar-expand-lg bg-success navbar-dark p-0 p-lg-2">
+			<h1 class="navbar-brand d-none d-lg-inline">Argila Mais</h1>
+
+			<button class="navbar-toggler m-2" type="button" data-toggle="collapse" data-target="#navMobile">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+			<nav id="navMobile" class="collapse navbar-collapse">
+				<img alt="imagem do usuário" src="../galeria/default-user.png" class="rounded-circle m-4 text-white" width="20%">
+				<ul class="navbar-nav w-100">
+					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Início</a></li>
+					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Registro de Ponto</a></li>
+					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Minhas Vendas</a></li>
+					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Gerenciar Estoque</a></li>
+					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Gerenciar Colaboradores</a></li>
+				</ul>
+			</nav>
+		</header>
+		
+		<h2 class="text-center my-4">Registro de Vendas</h2><hr>
+		<form class="formulario mx-auto">
+			<label class="w-25 font-weight-bold">Vendedor: </label>
+			<select name="vendedor" class="w-50 mb-2" required>
+				<option value="55710">Claudio Santos Silva</option>
+				<option value="33234">Jheniffer Alvaraz</option>
+				<option value="99572">Giselly Quitéria Santos</option>
+			</select><br>
+			<label class="w-25 font-weight-bold">Produto: </label>
+			<select name="produto" class="w-50 mb-2" required>
+				<option value="110">Sabonete de Argila Verde 90g</option>
+				<option value="96">Óleo de Coco 100ml</option>
+				<option value="23">Sabonete Íntimo Arruda</option>
+			</select><br>
+			<label class="w-25 font-weight-bold">Quantia: </label>
+			<input class="w-50 mb-2" type="number" name="quantidade" min="0" maxlength="3" placeholder="Quantidade Vendida" required>
+			<label class="w-25 font-weight-bold">Data: </label>
+			<input type="date" required><hr>
+			<input type="submit" value="Enviar" class="btn btn-success w-100 btn-lg">
+		</form>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	</body>
+</html>
