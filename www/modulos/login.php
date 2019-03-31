@@ -6,7 +6,7 @@
 
 	function login(){
 		$user = isset($_POST['user'])?$_POST['user']:'';
-		$pass = isset($_POST['password'])?$_POST['password']:'';
+		$pass = md5(isset($_POST['password'])?$_POST['password']:'');
 		$auth = getAuth(connectToDatabase());
 
 		$try = $auth->login($user,$pass);
@@ -40,8 +40,7 @@
 		}
 	}
 
-	$action = $_POST['action'];
-
+	$action = isset($_POST['action'])?$_POST['action']:'';
 	switch ($action) {
 		case 'login':
 			login();
@@ -54,6 +53,7 @@
 			verifyToken();
 			break;
 		default:
+			echo json_encode(['status'=>'ERROR','msg'=>'Operação não definida ou incorreta!']);
 			break;
 	}
 ?>
