@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 28-Mar-2019 às 20:57
--- Versão do servidor: 10.1.38-MariaDB
--- versão do PHP: 7.3.2
+-- Host: 127.0.0.1:3306
+-- Generation Time: 01-Abr-2019 às 10:22
+-- Versão do servidor: 5.7.24
+-- versão do PHP: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,25 +28,29 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `colaborador`
 --
 
-CREATE TABLE `colaborador` (
-  `matricula` smallint(6) NOT NULL,
+DROP TABLE IF EXISTS `colaborador`;
+CREATE TABLE IF NOT EXISTS `colaborador` (
+  `matricula` smallint(6) NOT NULL AUTO_INCREMENT,
   `cpf` varchar(11) NOT NULL,
   `nome` varchar(60) NOT NULL,
-  `senha` varchar(30) NOT NULL,
+  `senha` varchar(255) NOT NULL,
   `nascimento` date NOT NULL,
   `rg` varchar(10) NOT NULL,
-  `ctps` varchar(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `ctps` varchar(9) NOT NULL,
+  `cargo` enum('vendedor','programador','gerente','') NOT NULL,
+  PRIMARY KEY (`matricula`),
+  UNIQUE KEY `cpf` (`cpf`)
+) ENGINE=InnoDB AUTO_INCREMENT=10559 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `colaborador`
 --
 
-INSERT INTO `colaborador` (`matricula`, `cpf`, `nome`, `senha`, `nascimento`, `rg`, `ctps`) VALUES
-(10553, '12859896430', 'MATHEUS SILVA DO NASCIMENTO', '96401318', '1998-10-28', '39344142', '0000000'),
-(10554, '06102208455', 'ALESSANDRO BENTO DOS SANTOS', 'recife', '1974-02-06', '40711536', '000000000'),
-(10555, '13041477467', 'MATEUS DA FRANÇA JUCÁ', 'argilamais', '2001-11-10', '40009173', '000000000'),
-(10558, '10240061403', 'RUBENS DOS SANTOS SILVA', 'argilamais', '2001-04-05', '39605795', '000');
+INSERT INTO `colaborador` (`matricula`, `cpf`, `nome`, `senha`, `nascimento`, `rg`, `ctps`, `cargo`) VALUES
+(10553, '12859896430', 'MATHEUS SILVA DO NASCIMENTO', 'b68463bd1ed5a210161078781afbcc3b', '1998-10-28', '39344142', '0000000', 'programador'),
+(10554, '06102208455', 'ALESSANDRO BENTO DOS SANTOS', '6543b23e398c49f206356349a0ea49cc', '1974-02-06', '40711536', '000000000', 'gerente'),
+(10555, '13041477467', 'MATEUS DA FRANÇA JUCÁ', 'e9ed0e1b10d53924daccc6e6051b1987', '2001-11-10', '40009173', '000000000', 'vendedor'),
+(10558, '10240061403', 'RUBENS DOS SANTOS SILVA', 'e9ed0e1b10d53924daccc6e6051b1987', '2001-04-05', '39605795', '000', 'vendedor');
 
 -- --------------------------------------------------------
 
@@ -54,11 +58,21 @@ INSERT INTO `colaborador` (`matricula`, `cpf`, `nome`, `senha`, `nascimento`, `r
 -- Estrutura da tabela `estoque`
 --
 
-CREATE TABLE `estoque` (
-  `id` tinyint(4) NOT NULL,
+DROP TABLE IF EXISTS `estoque`;
+CREATE TABLE IF NOT EXISTS `estoque` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `quantidade` int(11) NOT NULL,
-  `produto_id` tinyint(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `produto_id` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `produto_id` (`produto_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `estoque`
+--
+
+INSERT INTO `estoque` (`id`, `quantidade`, `produto_id`) VALUES
+(1, 15, 105);
 
 -- --------------------------------------------------------
 
@@ -66,11 +80,13 @@ CREATE TABLE `estoque` (
 -- Estrutura da tabela `fornecedor`
 --
 
-CREATE TABLE `fornecedor` (
-  `id` tinyint(4) NOT NULL,
+DROP TABLE IF EXISTS `fornecedor`;
+CREATE TABLE IF NOT EXISTS `fornecedor` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `contato` varchar(14) DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
-  `nome` varchar(45) DEFAULT NULL
+  `nome` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -79,9 +95,12 @@ CREATE TABLE `fornecedor` (
 -- Estrutura da tabela `fornecedor_produto`
 --
 
-CREATE TABLE `fornecedor_produto` (
+DROP TABLE IF EXISTS `fornecedor_produto`;
+CREATE TABLE IF NOT EXISTS `fornecedor_produto` (
   `fornecedor_id` tinyint(4) NOT NULL,
-  `produto_id` tinyint(4) NOT NULL
+  `produto_id` tinyint(4) NOT NULL,
+  KEY `fornecedor_id` (`fornecedor_id`),
+  KEY `produto_id` (`produto_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -90,12 +109,14 @@ CREATE TABLE `fornecedor_produto` (
 -- Estrutura da tabela `produto`
 --
 
-CREATE TABLE `produto` (
-  `id` tinyint(4) NOT NULL,
+DROP TABLE IF EXISTS `produto`;
+CREATE TABLE IF NOT EXISTS `produto` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `preco_venda` decimal(7,2) NOT NULL,
   `preco_custo` decimal(7,2) NOT NULL,
-  `nome` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `produto`
@@ -111,12 +132,15 @@ INSERT INTO `produto` (`id`, `preco_venda`, `preco_custo`, `nome`) VALUES
 -- Estrutura da tabela `user_session`
 --
 
-CREATE TABLE `user_session` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user_session`;
+CREATE TABLE IF NOT EXISTS `user_session` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `matricula` smallint(6) NOT NULL,
   `token` varchar(20) NOT NULL,
-  `active` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `active` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `matricula` (`matricula`)
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `user_session`
@@ -134,115 +158,27 @@ INSERT INTO `user_session` (`id`, `matricula`, `token`, `active`) VALUES
 -- Estrutura da tabela `venda`
 --
 
-CREATE TABLE `venda` (
-  `codigo` tinyint(4) NOT NULL,
+DROP TABLE IF EXISTS `venda`;
+CREATE TABLE IF NOT EXISTS `venda` (
+  `codigo` tinyint(4) NOT NULL AUTO_INCREMENT,
   `matricula_vendedor` smallint(6) NOT NULL,
   `codigo_produto` tinyint(4) DEFAULT NULL,
   `valor` decimal(7,2) DEFAULT NULL,
   `data` date NOT NULL,
   `quantidade` tinyint(30) NOT NULL,
-  `comissao` decimal(30,0) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `comissao` decimal(7,2) NOT NULL,
+  PRIMARY KEY (`codigo`),
+  KEY `matricula_vendedor` (`matricula_vendedor`),
+  KEY `codigo_produto` (`codigo_produto`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `venda`
 --
 
 INSERT INTO `venda` (`codigo`, `matricula_vendedor`, `codigo_produto`, `valor`, `data`, `quantidade`, `comissao`) VALUES
-(1, 10558, 112, '90.00', '2019-03-28', 9, '27'),
-(2, 10558, 105, '50.00', '2019-03-28', 9, '15');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `colaborador`
---
-ALTER TABLE `colaborador`
-  ADD PRIMARY KEY (`matricula`),
-  ADD UNIQUE KEY `cpf` (`cpf`);
-
---
--- Indexes for table `estoque`
---
-ALTER TABLE `estoque`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `produto_id` (`produto_id`);
-
---
--- Indexes for table `fornecedor`
---
-ALTER TABLE `fornecedor`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `fornecedor_produto`
---
-ALTER TABLE `fornecedor_produto`
-  ADD KEY `fornecedor_id` (`fornecedor_id`),
-  ADD KEY `produto_id` (`produto_id`);
-
---
--- Indexes for table `produto`
---
-ALTER TABLE `produto`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_session`
---
-ALTER TABLE `user_session`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `matricula` (`matricula`);
-
---
--- Indexes for table `venda`
---
-ALTER TABLE `venda`
-  ADD PRIMARY KEY (`codigo`),
-  ADD KEY `matricula_vendedor` (`matricula_vendedor`),
-  ADD KEY `codigo_produto` (`codigo_produto`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `colaborador`
---
-ALTER TABLE `colaborador`
-  MODIFY `matricula` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10559;
-
---
--- AUTO_INCREMENT for table `estoque`
---
-ALTER TABLE `estoque`
-  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `fornecedor`
---
-ALTER TABLE `fornecedor`
-  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `produto`
---
-ALTER TABLE `produto`
-  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
-
---
--- AUTO_INCREMENT for table `user_session`
---
-ALTER TABLE `user_session`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
-
---
--- AUTO_INCREMENT for table `venda`
---
-ALTER TABLE `venda`
-  MODIFY `codigo` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+(1, 10558, 112, '90.00', '2019-03-28', 9, '27.00'),
+(2, 10558, 105, '50.00', '2019-03-28', 9, '15.00');
 
 --
 -- Constraints for dumped tables

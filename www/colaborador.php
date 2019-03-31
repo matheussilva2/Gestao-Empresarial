@@ -28,7 +28,7 @@
 		<!-- Resumo do Colaborador -->
 
 		<div class="container-fluid bg-success pb-3">
-			<img src="../galeria/default-user.png" class="rounded-circle text-white mt-4 mb-2" width="25%" alt="imagem do usuário" style="margin-left: 37%;">
+			<img src="./galeria/default-user.png" class="rounded-circle text-white mt-4 mb-2" width="25%" alt="imagem do usuário" style="margin-left: 37%;">
 			<h2 class="h3 text-center text-light mb-2">Nome do Colaborador</h2>
 			<p class="text-white text-center m-0"><strong>Situação:</strong> Contratado</p>
 		</div>
