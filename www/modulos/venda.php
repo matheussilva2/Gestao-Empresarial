@@ -38,28 +38,33 @@
 		$data = isset($_POST['data'])?$_POST['data']:'0';
 		$valor_produto = acharProdutoPorId($codigo_produto)['preco_venda'];
 		$quantidade = isset($_POST['quantidade'])?$_POST['quantidade']:'0';	
-		$valor_total = $valor_produto*$quantidade;
-		$venda = new Venda($matricula, $codigo_produto, $valor_total, $data, $quantidade);
+		$venda = new Venda($matricula, $codigo_produto, $valor_produto, $data, $quantidade);
 		return $venda;
 	}
 
 	function registrarVenda($vendaObjeto){
 		$con = conectar();
 		try{
-			$prepare = $con->prepare("INSERT INTO venda values ('1',:matricula,:codigo,:total,:data,:quantidade,:comissao)");
+			$prepare = $con->prepare("
+				INSERT INTO venda (matricula_vendedor,codigo_produto, valor, data, quantidade, comissao)
+				values (:matricula,:codigo_produto,:total,:data,:quantidade,:comissao)
+				");
+
 			if($prepare->execute([
 				'matricula'=>$vendaObjeto->getMatricula(),
-				'codigo'=>$vendaObjeto->getCodigoProduto(),
+				'codigo_produto'=>$vendaObjeto->getCodigoProduto(),
 				'total'=>$vendaObjeto->getValorTotal(),
 				'data'=>$vendaObjeto->getData(),
 				'quantidade'=>$vendaObjeto->getQuantidade(),
 				'comissao'=>$vendaObjeto->getComissao(),
-			])){
-				echo "Registro Inserido";
-			}else{
-				echo("Falha na inserção");
+			]))
+			{
+				echo json_encode(['status'=>'OK','msg'=>'O registro foi feito com sucesso!']);
 			}
-			echo json_encode(['status'=>'OK','msg'=>'O registro foi feito com sucesso!']);
+			else
+			{
+				echo json_encode($prepare->errorInfo());
+			}
 		}
 		catch(PDOException $e){
 			echo json_encode(['status'=>'ERROR','msg'=>$sql."<br>".$e->getMessage()]);

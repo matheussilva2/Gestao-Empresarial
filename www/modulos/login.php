@@ -34,9 +34,9 @@
 		$auth = new Authorization(connectToDatabase());
 		$response = $auth->verifyToken($_COOKIE["_session"]);
 		if($response === true){
-			echo '1';
+			echo json_encode(['status'=>'OK','msg'=>'Token Válido!']);
 		}else{
-			echo false;
+			echo json_encode(['status'=>'FALHA','msg'=>'Token Inválido!']);
 		}
 	}
 
