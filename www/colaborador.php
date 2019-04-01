@@ -1,3 +1,12 @@
+<?php
+	require_once('modulos/colaborador.php');
+	$colaborador = getUserByToken($_COOKIE['_session']);
+
+	function converterData($string){
+		return implode('/',array_reverse(explode('-', $string)));
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,7 +24,7 @@
 			<span class="navbar-toggler-icon"></span>
 			</button>
 			<nav id="navMobile" class="collapse navbar-collapse">
-				<img alt="imagem do usuário" src="../galeria/default-user.png" class="rounded-circle m-4 text-white" width="20%">
+				<img alt="imagem do usuário" src="./galeria/default-user.png" class="rounded-circle m-4 text-white" width="20%">
 				<ul class="navbar-nav w-100">
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Início</a></li>
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Registro de Ponto</a></li>
@@ -29,7 +38,7 @@
 
 		<div class="container-fluid bg-success pb-3">
 			<img src="./galeria/default-user.png" class="rounded-circle text-white mt-4 mb-2" width="25%" alt="imagem do usuário" style="margin-left: 37%;">
-			<h2 class="h3 text-center text-light mb-2">Nome do Colaborador</h2>
+			<h2 class="h4 text-center text-light mb-2"><?php echo $colaborador['nome'];?></h2>
 			<p class="text-white text-center m-0"><strong>Situação:</strong> Contratado</p>
 		</div>
 		
@@ -41,27 +50,27 @@
 				<div class="px-4 py-2 collapse" id="infoGerais" data-parent="#infoColaborador">
 					<div class="row">
 						<div class="col-4"><strong>Matrícula</strong>: </div>
-						<div class="col-8">10552</div>
+						<div class="col-8"><?php echo $colaborador["matricula"];?></div>
 					</div>
 					<div class="row">
 						<div class="col-4"><strong>Nome</strong>: </div>
-						<div class="col-8">Matheus Silva do Nascimento</div>
+						<div class="col-8"><?php echo $colaborador["nome"];?></div>
 					</div>
 					<div class="row">
 						<div class="col-4"><strong>Nascimento</strong>: </div>
-						<div class="col-8">00/00/0000</div>
+						<div class="col-8"><?php echo converterData($colaborador['nascimento']);?></div>
 					</div>
 					<div class="row">
 						<div class="col-4"><strong>CPF</strong>: </div>
-						<div class="col-8">000.000.000-12</div>
+						<div class="col-8"><?php echo $colaborador["cpf"];?></div>
 					</div>
 					<div class="row">
 						<div class="col-4"><strong>RG</strong>: </div>
-						<div class="col-8">0000000-0</div>
+						<div class="col-8"><?php echo $colaborador["rg"];?></div>
 					</div>
 					<div class="row">
-						<div class="col-4"><strong>Status</strong>: </div>
-						<div class="col-8">Contratado</div>
+						<div class="col-4"><strong>Cargo</strong>: </div>
+						<div class="col-8"><?php echo ucfirst($colaborador["cargo"]);?></div>
 					</div>
 				</div>
 
