@@ -1,9 +1,15 @@
 <?php
 	require_once('modulos/colaborador.php');
+	$hoje = date('Y-m-d');
+	$semana = subtrairData(new DateTime($hoje),7);
+	$mes = subtrairData(new DateTime($hoje),30);
 	$colaborador = getUserByToken($_COOKIE['_session']);
-
 	function converterData($string){
 		return implode('/',array_reverse(explode('-', $string)));
+	}
+	function subtrairData($dataInicial, $dias){
+		$dataInicial->sub(new DateInterval('P'.$dias.'D'));
+		return $dataInicial->format('Y-m-d');
 	}
 ?>
 
@@ -39,7 +45,12 @@
 		<div class="container-fluid bg-success pb-3">
 			<img src="./galeria/default-user.png" class="rounded-circle text-white mt-4 mb-2" width="25%" alt="imagem do usuário" style="margin-left: 37%;">
 			<h2 class="h4 text-center text-light mb-2"><?php echo $colaborador['nome'];?></h2>
-			<p class="text-white text-center m-0"><strong>Situação:</strong> Contratado</p>
+			<p class="text-white text-center m-0">
+				<strong>Situação:</strong>
+				<?php
+					echo "Trabalhando";
+				?>
+			</p>
 		</div>
 		
 		<!-- Informações Gerais sobre o Colaborador -->
@@ -85,11 +96,23 @@
 					<div id="quantidadeVendas" class="collapse" data-parent="#resumoVendas">
 						<div class="row p-3">
 							<div class="col-6"><strong>Hoje</strong></div>
-							<div class="col-6">12</div>
+							<div class="col-6">
+								<?php
+								echo getQuantidadeVendas($colaborador['matricula'],$hoje, $hoje)['quantidade'];
+								?>
+							</div>
 							<div class="col-6"><strong>Semana</strong></div>
-							<div class="col-6">105</div>
+							<div class="col-6">
+								<?php 
+									echo getQuantidadeVendas($colaborador['matricula'],subtrairData(new DateTime($hoje),7),$hoje)['quantidade'];
+								?>
+							</div>
 							<div class="col-6"><strong>Mês</strong></div>
-							<div class="col-6">805</div>
+							<div class="col-6">
+								<?php 
+									echo getQuantidadeVendas($colaborador['matricula'],subtrairData(new DateTime($hoje),30),$hoje)['quantidade'];
+								?>
+							</div>
 						</div>
 					</div>
 
@@ -97,29 +120,57 @@
 					<div id="lucro" class="collapse" data-parent="#resumoVendas">
 						<div class="row p-3">
 							<div class="col-6"><strong>Hoje</strong></div>
-							<div class="col-6">12</div>
+							<div class="col-6">R$
+								<?php 
+									echo getQuantidadeVendas($colaborador['matricula'],$hoje,$hoje)['valor'];
+								?>
+							</div>
 							<div class="col-6"><strong>Semana</strong></div>
-							<div class="col-6">105</div>
+							<div class="col-6">R$
+								<?php 
+									echo getQuantidadeVendas($colaborador['matricula'],subtrairData(new DateTime($hoje),7),$hoje)['valor'];
+								?>
+							</div>
 							<div class="col-6"><strong>Mês</strong></div>
-							<div class="col-6">805</div>
+							<div class="col-6">R$
+								<?php 
+									echo getQuantidadeVendas($colaborador['matricula'],subtrairData(new DateTime($hoje),30),$hoje)['valor'];
+								?>
+							</div>
 						</div>
 					</div>
 					<button data-toggle="collapse" data-target="#mediaVendas" class="btn text-dark font-weight-bold bg-light w-100 b-0 py-3">Média de Vendas</button>
 					<div id="mediaVendas" class="collapse" data-parent="#resumoVendas">
 						<div class="row p-3">
 							<div class="col-6"><strong>Semana</strong></div>
-							<div class="col-6">105</div>
+							<div class="col-6">
+								<?php 
+									echo (int)getMediaVendas($colaborador['matricula'],subtrairData(new DateTime($hoje),7),$hoje)['quantidade'];
+								?>
+							</div>
 							<div class="col-6"><strong>Mês</strong></div>
-							<div class="col-6">805</div>
+							<div class="col-6">
+								<?php 
+									echo (int)getMediaVendas($colaborador['matricula'],subtrairData(new DateTime($hoje),30),$hoje)['quantidade'];
+								?>
+							</div>
 						</div>
 					</div>
 					<button data-toggle="collapse" data-target="#mediaLucro" class="btn text-dark font-weight-bold bg-light w-100 b-0 py-3">Média Lucro</button>
 					<div id="mediaLucro" class="collapse" data-parent="#resumoVendas">
 						<div class="row p-3">
 							<div class="col-6"><strong>Semana</strong></div>
-							<div class="col-6">105</div>
+							<div class="col-6">R$
+								<?php
+									echo number_format(getMediaVendas($colaborador['matricula'],subtrairData(new DateTime($hoje),7),$hoje)['valor'],2);
+								?>
+							</div>
 							<div class="col-6"><strong>Mês</strong></div>
-							<div class="col-6">805</div>
+							<div class="col-6">R$
+								<?php 
+									echo number_format((float)getMediaVendas($colaborador['matricula'],subtrairData(new DateTime($hoje),30),$hoje)['valor'],2);
+								?>
+							</div>
 						</div>
 					</div>
 						
