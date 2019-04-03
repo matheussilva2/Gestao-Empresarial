@@ -26,10 +26,12 @@
 		unset($_COOKIE["_session"]);
 		unset($_COOKIE["user"]);
 	}
+
 	function getAuth($conn){
 		$auth = new Authorization($conn);
 		return $auth;
 	}
+
 	function verifyToken(){
 		$auth = new Authorization(connectToDatabase());
 		$response = $auth->verifyToken($_COOKIE["_session"]);
@@ -38,6 +40,10 @@
 		}else{
 			echo json_encode(['status'=>'FALHA','msg'=>'Token Inválido!']);
 		}
+	}
+
+	function getTokenInfo(){
+		
 	}
 
 	$action = isset($_POST['action'])?$_POST['action']:'';
