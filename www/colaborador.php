@@ -13,33 +13,9 @@
 	}
 ?>
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Argila Mais - Colaborador</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		
-	</head>
-	<body class="bg-light">
-		<header class="navbar navbar-expand-lg bg-success navbar-dark p-0 p-lg-2">
-			<h1 class="navbar-brand d-none d-lg-inline">Argila Mais</h1>
-
-			<button class="navbar-toggler m-2" type="button" data-toggle="collapse" data-target="#navMobile">
-			<span class="navbar-toggler-icon"></span>
-			</button>
-			<nav id="navMobile" class="collapse navbar-collapse">
-				<img alt="imagem do usuário" src="./galeria/default-user.png" class="rounded-circle m-4 text-white" width="20%">
-				<ul class="navbar-nav w-100">
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Início</a></li>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Registro de Ponto</a></li>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Minhas Vendas</a></li>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Gerenciar Estoque</a></li>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left">Gerenciar Colaboradores</a></li>
-				</ul>
-			</nav>
-		</header>
+<?php
+	include('./modelos/header.php');
+?>
 		<!-- Resumo do Colaborador -->
 
 		<div class="container-fluid bg-success pb-3">
@@ -194,14 +170,13 @@
 					})
 					.done(function(msg) {
 						var res = JSON.parse(msg);
-						if(res['status']!='OK'){
+						if(res['status']=='FALHA'){
 							location.href="./login.php";
 						}
 					})
 					.fail(function() {
 						alert("Algo deu errado! Recarregue a página ou contate o administrador!");
 					})
-					
 				}else{
 					location.href="./login.php";
 				}
