@@ -194,8 +194,8 @@
 					})
 					.done(function(msg) {
 						var res = JSON.parse(msg);
-						if(res['status']=='OK'){
-							location.href="./colaborador.php";
+						if(res['status']!='OK'){
+							location.href="./login.php";
 						}
 					})
 					.fail(function() {
@@ -204,9 +204,7 @@
 					
 				}
 			}
-			if(!validarCookie(getCookie('_session'))){
-				location.href="./login.php";
-			}
+			validarCookie(getCookie('_session'));
 		</script>
 	</body>
 </html>
