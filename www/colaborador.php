@@ -177,6 +177,8 @@
 					.fail(function() {
 						alert("Algo deu errado! Recarregue a página ou contate o administrador!");
 					})
+				}else{
+					location.href="./login.php";
 				}
 			}
 			validarCookie(getCookie('_session'));
