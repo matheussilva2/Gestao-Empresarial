@@ -3,15 +3,18 @@
 	require_once('stockmanager.php');
 	
 	class Venda{
-		function __construct($matricula, $codigo_produto,$valor_produto, $data, $quantidade){
+		function __construct($matricula, $codigo_produto,$valor_produto, $data, $quantidade, $emissor){
 			$this->matricula = $matricula;
 			$this->codigo_produto = $codigo_produto;
 			$this->data = $data;
 			$this->quantidade = $quantidade;
 			$this->valor_total = $valor_produto*$this->getQuantidade();
 			$this->comissao = $this->getValorTotal()*0.3;
+			$this->emissor = $emissor;
 		}
-
+		function getEmissor(){
+			return $this->emissor;
+		}
 		function getMatricula(){
 			return $this->matricula;
 		}
@@ -37,8 +40,9 @@
 		$codigo_produto = isset($_POST['codigo'])?$_POST['codigo']:'0';
 		$data = isset($_POST['data'])?$_POST['data']:'0';
 		$valor_produto = acharProdutoPorId($codigo_produto)['preco_venda'];
-		$quantidade = isset($_POST['quantidade'])?$_POST['quantidade']:'0';	
-		$venda = new Venda($matricula, $codigo_produto, $valor_produto, $data, $quantidade);
+		$quantidade = isset($_POST['quantidade'])?$_POST['quantidade']:'0';
+		$emissor = isset($_POST['emissor'])?$_POST['emissor']:'0';
+		$venda = new Venda($matricula, $codigo_produto, $valor_produto, $data, $quantidade, $emissor);
 		return $venda;
 	}
 
@@ -46,8 +50,8 @@
 		$con = conectar();
 		try{
 			$prepare = $con->prepare("
-				INSERT INTO venda (matricula_vendedor,codigo_produto, valor, data, quantidade, comissao)
-				values (:matricula,:codigo_produto,:total,:data,:quantidade,:comissao)
+				INSERT INTO venda (matricula_vendedor,codigo_produto, valor, data, quantidade, comissao, emissor)
+				values (:matricula,:codigo_produto,:total,:data,:quantidade,:comissao, :emissor)
 				");
 
 			if($prepare->execute([
@@ -57,6 +61,7 @@
 				'data'=>$vendaObjeto->getData(),
 				'quantidade'=>$vendaObjeto->getQuantidade(),
 				'comissao'=>$vendaObjeto->getComissao(),
+				'emissor'=>$vendaObjeto->getEmissor()
 			]))
 			{
 				echo json_encode(['status'=>'OK','msg'=>'O registro foi feito com sucesso!']);

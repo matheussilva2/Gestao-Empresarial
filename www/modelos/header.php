@@ -20,10 +20,16 @@
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./colaborador.php">Início</a></li>
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left"
 						href="./registro-ponto.php">Registro de Ponto</a></li>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./vendas.php">Minhas Vendas</a></li>
+					<div class="dropdown">
+						<button type="button" class="btn btn-success pl-4 dropdown-toggle w-100 text-left" data-toggle="dropdown">Vendas</button>
+						<ul class="dropdown-menu">
+							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./vendas.php">Minhas Vendas</a></li>
+							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./registrar-venda.php">Registrar Venda</a></li>
+							<li><a href="./solicitar-entrega.php" class="text-white pl-4 btn btn-success nav-link text-left">Solicitar Entrega</a></li>
+						</ul>
+					</div>
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./estoque.php">Gerenciar Estoque</a></li>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left"
-						href="./colaboradores.php">Gerenciar Colaboradores</a></li>
+					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./colaboradores.php">Gerenciar Colaboradores</a></li>
 				</ul>
 			</nav>
 		</header>
