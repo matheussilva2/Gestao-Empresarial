@@ -23,7 +23,7 @@
 					<div class="dropdown">
 						<button type="button" class="btn btn-success pl-4 dropdown-toggle w-100 text-left" data-toggle="dropdown">Vendas</button>
 						<ul class="dropdown-menu">
-							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./vendas.php">Minhas Vendas</a></li>
+							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./minhas-vendas.php">Minhas Vendas</a></li>
 							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./registrar-venda.php">Registrar Venda</a></li>
 							<li><a href="./solicitar-entrega.php" class="text-white pl-4 btn btn-success nav-link text-left">Solicitar Entrega</a></li>
 						</ul>
