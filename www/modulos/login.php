@@ -1,30 +1,25 @@
 <?php
 	include_once 'Authorization.php';
-	function connectToDatabase(){
-		return new PDO('mysql:host=localhost;dbname=authorization', 'root', '');
-	}
+	include_once 'database.php';
 
 	function login(){
 		$user = isset($_POST['user'])?$_POST['user']:'';
-		$pass = md5(isset($_POST['password'])?$_POST['password']:'');
-		$auth = getAuth(connectToDatabase());
+		$pass = isset($_POST['password'])?md5($_POST['password']):'';
+		$auth = getAuth(conectar());
 
 		$try = $auth->login($user,$pass);
 		if($try === true){
 			setcookie("_session", $auth->getUserSession()['token'], time()+99*55, "/");
-			setcookie("user", $user, time()+99*55, "/");
-
-			echo json_encode([ 'token' => $auth->getUserSession()['token'], 'user' => $user, ]);
+			echo json_encode([ 'status'=>'OK','token' => $auth->getUserSession()['token'], 'user' => $user, ]);
 		} else {
-			echo json_encode([ 'error' => $try['error'], ]);
+			echo json_encode([ 'status'=>'ERROR','error' => $try['error'], ]);
 		}
 	}
 
 	function logout(){	
-		$auth = getAuth(connectToDatabase());
+		$auth = getAuth(conectar());
 		$auth->disableToken($_COOKIE["_session"]);
 		unset($_COOKIE["_session"]);
-		unset($_COOKIE["user"]);
 	}
 
 	function getAuth($conn){
@@ -33,12 +28,12 @@
 	}
 
 	function verifyToken(){
-		$auth = new Authorization(connectToDatabase());
+		$auth = new Authorization(conectar());
 		$response = $auth->verifyToken($_COOKIE["_session"]);
 		if($response === true){
 			echo json_encode(['status'=>'OK','msg'=>'Token Válido!']);
 		}else{
-			echo json_encode(['status'=>'FALHA','msg'=>'Token Inválido!']);
+			echo json_encode(['status'=>'FALHA','msg'=>'Token Inválido! ']);
 		}
 	}
 

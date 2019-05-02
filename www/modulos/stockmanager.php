@@ -8,4 +8,15 @@
 		$produto = $query->fetch();
 		return $produto;
 	}
+
+	function getProdutos(){
+		$con = conectar();
+		$sql = "
+		SELECT produto.id, produto.nome, produto.preco_venda, produto.preco_custo, estoque.quantidade
+		FROM produto
+		INNER JOIN estoque
+		";
+		$query = $con->query($sql);
+		return $query->fetchAll();
+	}
 ?>

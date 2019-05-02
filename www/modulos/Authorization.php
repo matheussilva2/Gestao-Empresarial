@@ -40,13 +40,13 @@ class Authorization {
     function registerToken($user, $token){
         $prepare = $this->link->prepare('
             INSERT INTO user_session
-                (user, token, active)
+                (matricula, token, active)
             VALUES
                 (:user, :token, 1)
         ');
 
         $result = $prepare->execute([
-            'user' => $user['id'],
+            'user' => $user['matricula'],
             'token' => $token,
         ]);
 
@@ -59,11 +59,11 @@ class Authorization {
 
     function userExists($username, $password){
         $prepare = $this->link->prepare('
-            SELECT id
-            FROM user
+            SELECT matricula
+            FROM colaborador
             WHERE
-                username = :username
-                AND password = :password
+                matricula = :username
+                AND senha = :password
         ');
 
         $prepare->execute([
@@ -84,7 +84,7 @@ class Authorization {
 
     function verifyToken ($token) {
         $prepare = $this->link->prepare('
-            SELECT id, user, active
+            SELECT id, matricula, active
             FROM user_session
             WHERE token = :token
         ');
@@ -104,11 +104,11 @@ class Authorization {
         }
 
         $this->user = [
-            'id' => $user_session['user'],
+            'id' => $user_session['matricula'],
         ];
 
         $this->user_session = [
-            'id' => $user_session['id'],
+            'id' => $user_session['matricula'],
             'token' => $token,
             'active' => (bool) $user_session['active'],
         ];
