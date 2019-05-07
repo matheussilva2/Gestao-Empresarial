@@ -12,15 +12,15 @@
 
     function checkarAutorizacao($privilegio){
         $colaborador = getUserByToken($_COOKIE['_session']);
-        if($colaborador['permissao'] >= $privilegio){
-        $pagina_autorizacao=$privilegio."
-        <div class='container mt-4 text-center'>
-            <h2 class='mb-3'>Você não têm permissão para acessar essa página!</h2>
-            <a class='btn btn-primary' href='./colaborador.php'>Voltar para o início</a>
-        </div>
-        ";
-        die($pagina_autorizacao);
-    }
+        if(!in_array($colaborador['permissao'], $privilegio)){
+            $pagina_autorizacao="
+            <div class='container mt-4 text-center'>
+                <h2 class='mb-3'>Você não têm permissão para acessar essa página!</h2>
+                <a class='btn btn-primary' href='./colaborador.php'>Voltar para o início</a>
+            </div>
+            ";
+            die($pagina_autorizacao);
+        }
     }
 
 	function getUserByToken($token){

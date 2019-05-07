@@ -3,7 +3,7 @@
 	require_once('./modelos/estoque.php');
 
 	require_once('./modulos/colaborador.php');
-	checkarAutorizacao(checkarAutorizacao());
+	checkarAutorizacao([1]);
 	
 	$produtos = getProdutos();
 ?>

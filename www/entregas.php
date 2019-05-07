@@ -2,7 +2,7 @@
 	include('./modelos/header.php');
 	
 	require_once('./modulos/colaborador.php');
-	checkarAutorizacao(checkarAutorizacao(4));
+	checkarAutorizacao([1]);
 
 	require_once("./modelos/entregas.php");
 	require_once('./modulos/entregas.php');
