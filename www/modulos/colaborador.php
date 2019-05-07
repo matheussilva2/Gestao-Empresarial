@@ -10,9 +10,22 @@
 		return $prepare->fetchAll();
 	}
 
+    function checkarAutorizacao($privilegio){
+        $colaborador = getUserByToken($_COOKIE['_session']);
+        if($colaborador['permissao'] >= $privilegio){
+        $pagina_autorizacao=$privilegio."
+        <div class='container mt-4 text-center'>
+            <h2 class='mb-3'>Você não têm permissão para acessar essa página!</h2>
+            <a class='btn btn-primary' href='./colaborador.php'>Voltar para o início</a>
+        </div>
+        ";
+        die($pagina_autorizacao);
+    }
+    }
+
 	function getUserByToken($token){
         $prepare = conectar()->prepare('
-            SELECT colaborador.matricula, colaborador.cpf, colaborador.nome,
+            SELECT colaborador.permissao, colaborador.matricula, colaborador.cpf, colaborador.nome,
             colaborador.nascimento, colaborador.rg, colaborador.cargo
             FROM colaborador
             INNER JOIN user_session
@@ -40,7 +53,9 @@
             'data_inicio'=>$dataInicio,
             'data_fim' => $dataFim
         ]);
-        return $prepare->fetch();
+        $vendas = $prepare->fetch();
+        
+        return $vendas;
     }
 
     function getMediaVendas($matricula, $dataInicio, $dataFim){

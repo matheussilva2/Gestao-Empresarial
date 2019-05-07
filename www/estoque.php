@@ -1,6 +1,10 @@
 <?php
 	require_once('./modulos/stockmanager.php');
 	require_once('./modelos/estoque.php');
+
+	require_once('./modulos/colaborador.php');
+	checkarAutorizacao(checkarAutorizacao());
+	
 	$produtos = getProdutos();
 ?>
 

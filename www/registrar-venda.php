@@ -2,9 +2,12 @@
 	require_once('./modulos/colaborador.php');
 	require_once('./modulos/produto.php');
 	include('./modelos/header.php');
+
 	$colaboradores = procurarTodosColaboradores();
+	
 	$produtos = procurarTodosProdutos();
 	$colaborador = getUserByToken($_COOKIE['_session']);
+	checkarAutorizacao(checkarAutorizacao(4));
 ?>
 <script type="text/javascript" src="./modulos/cookiemanager.js"></script>
 			
