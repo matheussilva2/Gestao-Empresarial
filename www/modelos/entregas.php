@@ -3,7 +3,7 @@
 		return implode('/',array_reverse(explode('-', $string)));
 	}
 
-	function mostrarTodasEntregas($entregas)
+	function mostrarEntregas($entregas)
 	{
 		for ($i=0; $i < sizeof($entregas); $i++) { 
 				echo '
@@ -11,12 +11,12 @@
 						<td>'.converterData($entregas[$i]['data']).'</td>
 						<td>'.($entregas[$i]['nome']).'</td>
 						<td>
-							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#info-entrega">
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#info-entrega'.$entregas[$i]['id'].'">
 								Ver Mais
 							</button>
 						</td>
 					</tr>
-					<div id="info-entrega" class="modal fade" role="dialog">
+					<div id="info-entrega'.$entregas[$i]['id'].'" class="modal fade" role="dialog">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -36,8 +36,10 @@
 										<strong>Endereço</strong>: '.($entregas[$i]['endereco']).'
 									</p>
 								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+								<div id='.$entregas[$i]['id'].' class="modal-footer">
+									<button id="concluirEntregaBtn" type="button" class="concluirBtn btn btn-success" data-dismiss="modal">Concluir Entrega</button>
+
+									<button id="cancelarEntregaBtn" type="button" class="cancelarBtn btn btn-danger" data-dismiss="modal">Cancelar Entrega</button>
 								</div>
 							</div>
 						</div>

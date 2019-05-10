@@ -1,7 +1,7 @@
 <?php
 	include('./modelos/header.php');
 ?>
-<div class="container">
+<div class="container pb-4">
 	<h1 class="h3 pt-3">Solicitação de Entrega</h1>
 	<hr>
 	<div id="successNotification" style="display: none;" class="alert alert-success pt-2 pl-2 pb-1 mb-2 my-3">
@@ -19,6 +19,8 @@
 		<input class="w-100 mb-3" type="text" id="iQuarto"><br>
 		<label class="w-100">Endereço</label><br>
 		<input class="w-100 mb-3" type="text" id="iEndereco"><br>
+		<label class="w-100">Produtos</label><br>
+		<input class="w-100 mb-3" type="text" id="iProdutos"><br>
 		<button id="enviarBtn" type="button" class="btn btn-success w-100">Solicitar Entrega</button>
 	</form>
 </div>
@@ -66,6 +68,7 @@
 					hotel: $('#iHotel').val(),
 					quarto: $('#iQuarto').val(),
 					endereco: $('#iEndereco').val(),
+					produtos: $('#iProdutos').val(),
 				}
 				enviarSolicitacao(solicitacao);
 			}
@@ -83,6 +86,7 @@
 				quarto: solicitacao.quarto,
 				endereco: solicitacao.endereco,
 				cookie: cookieSessao,
+				produtos: solicitacao.produtos,
 			},
 			success: function($dados){
 				var resposta = JSON.parse($dados);
