@@ -21,13 +21,13 @@
 				$con = conectar();
 				$status = $_GET['status'];
 				$id = $_GET['id'];
-				$sql = "
+				$sqlEntrega = "
 						UPDATE solicitacaoentrega
 						SET status = $status
 						WHERE id = $id
 						";
 
-				$prepare = $con->prepare($sql);
+				$prepare = $con->prepare($sqlEntrega);
 				$prepare->execute();
 				echo json_encode(['status'=>'OK', 'msg'=>'Entrega atualizada!']);
 			}
@@ -37,7 +37,6 @@
 		}else{
 			die(json_encode(['status'=>'ERRO','msg'=>'Há campos faltando!']));
 		}
-		
 	}
 
 	function checkarGet($value){

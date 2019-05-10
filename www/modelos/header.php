@@ -18,16 +18,16 @@
 			<nav id="navMobile" class="collapse navbar-collapse">
 				<img alt="imagem do usuário" src="./galeria/default-user.png" class="rounded-circle m-4 text-white d-block d-xl-none" width="20%">
 				<ul class="navbar-nav w-100 list-unstyled">
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./colaborador">Início</a></li>
+					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./colaborador.php">Início</a></li>
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left"
-						href="./registro-ponto">Registro de Ponto</a></li>
+						href="./registro-ponto.php">Registro de Ponto</a></li>
 					<div class="dropdown">
 						<button type="button" class="btn btn-success pl-4 dropdown-toggle w-100 text-left" data-toggle="dropdown">Vendas</button>
 						<ul class="dropdown-menu">
-							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./minhas-vendas">Minhas Vendas</a></li>
-							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./registrar-venda">Registrar Venda</a></li>
-							<li><a href="./solicitar-entrega" class="text-white pl-4 btn btn-success nav-link text-left">Solicitar Entrega</a></li>
-							<li><a href="./entregas" class="text-white pl-4 btn btn-success nav-link text-left">Entregas</a></li>
+							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./minhas-vendas.php">Minhas Vendas</a></li>
+							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./registrar-venda.php">Registrar Venda</a></li>
+							<li><a href="./solicitar-entrega.php" class="text-white pl-4 btn btn-success nav-link text-left">Solicitar Entrega</a></li>
+							<li><a href="./entregas.php" class="text-white pl-4 btn btn-success nav-link text-left">Entregas</a></li>
 						</ul>
 					</div>
 					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./estoque.php">Gerenciar Estoque</a></li>

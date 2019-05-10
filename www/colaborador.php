@@ -179,7 +179,11 @@
 					})
 				}
 			}
-			validarCookie(getCookie('_session'));
+			if(getCookie('_session') != false){
+				validarCookie(getCookie('_session'));
+			}else{
+				window.location.href = './login.php'
+			}
 		</script>
 	</body>
 </html>

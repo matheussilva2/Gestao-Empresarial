@@ -1,8 +1,14 @@
 <?php
 	include("./modelos/header.php");
 	require_once('modulos/colaborador.php');
+	
 	$colaborador = getUserByToken($_COOKIE['_session']);
 	$hoje = date('Y-m-d');
+
+	$vendasAnual = [];
+	for ($i=1; $i <= 12; $i++) { 
+		array_push($vendasAnual, getQuantidadeVendas($colaborador['matricula'],date('Y-').$i.'-01',date('Y-').$i.date('-t'))['quantidade']);
+	}
 	function subtrairData($dataInicial, $dias){
 		$dataInicial->sub(new DateInterval('P'.$dias.'D'));
 		return $dataInicial->format('Y-m-d');
@@ -56,11 +62,19 @@
 		<canvas id="vendasMensal"></canvas>
 	</div>
 </div>
+<script src="./modulos/cookiemanager.js"></script>
+<script>
+	if(getCookie('_session') != false){
+		validarCookie(getCookie('_session'));
+	}else{
+		window.location.href = './login.php'
+	}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 	var graficoVendasCtx = document.getElementById("vendasAnual").getContext('2d');
 	var graficoVendas = new Chart(graficoVendasCtx,{
-		type: 'line',
+		type: 'bar',
 
 		data:{
 			labels:['Janeiro','Fevereiro','Março','abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
@@ -68,7 +82,7 @@
 				label: 'Vendas',
 				backgroundColor:'rgb(255, 99, 132)',
 				borderColor: 'rgb(255, 99, 132)',
-				data: [0,10,20,30,15,23,60]
+				data: <?php echo json_encode($vendasAnual)?>,
 			}]
 		}
 	});
@@ -76,7 +90,7 @@
 <script>
 	var graficoVendasCtx = document.getElementById("vendasMensal").getContext('2d');
 	var graficoVendas = new Chart(graficoVendasCtx,{
-		type: 'line',
+		type: 'bar',
 
 		data:{
 			labels:['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],

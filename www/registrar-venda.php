@@ -7,7 +7,7 @@
 	
 	$produtos = procurarTodosProdutos();
 	$colaborador = getUserByToken($_COOKIE['_session']);
-	checkarAutorizacao(checkarAutorizacao(4));
+	checkarAutorizacao([1]); 
 ?>
 <script type="text/javascript" src="./modulos/cookiemanager.js"></script>
 			

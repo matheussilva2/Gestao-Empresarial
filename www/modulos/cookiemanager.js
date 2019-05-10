@@ -11,7 +11,7 @@ function getCookie(cname) {
       return c.substring(name.length, c.length);
     }
   }
-  return "";
+  return false;
 }
 
 function setCookie(cname, cvalue, exdays) {

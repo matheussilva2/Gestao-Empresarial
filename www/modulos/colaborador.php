@@ -13,7 +13,7 @@
     function checkarAutorizacao($privilegio){
         $colaborador = getUserByToken($_COOKIE['_session']);
         if(!in_array($colaborador['permissao'], $privilegio)){
-            $pagina_autorizacao="
+            $pagina_autorizacao = "
             <div class='container mt-4 text-center'>
                 <h2 class='mb-3'>Você não têm permissão para acessar essa página!</h2>
                 <a class='btn btn-primary' href='./colaborador.php'>Voltar para o início</a>
@@ -55,6 +55,10 @@
         ]);
         $vendas = $prepare->fetch();
         
+        if(is_null($vendas['quantidade']))
+        {
+            return ['quantidade'=>0,'valor'=>0];
+        }
         return $vendas;
     }
 

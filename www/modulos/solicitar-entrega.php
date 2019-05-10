@@ -1,6 +1,7 @@
 <?php
 	require_once('./database.php');
 	require_once('./colaborador.php');
+
 	class Entrega{
 		function __construct($nome, $telefone, $hotel, $quarto, $endereco, $cookie, $produtos){
 			$this->nome = $nome;
@@ -61,7 +62,6 @@
 		}catch(PDOException $e){
 			echo json_encode(['status'=>'ERRO','msg'=>$sql."<br>".$e->getMessage()]);
 		}
-
 	}
 
 	if(!isEmpty('nome')
