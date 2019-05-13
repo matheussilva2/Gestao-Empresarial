@@ -6,9 +6,23 @@
 	$hoje = date('Y-m-d');
 
 	$vendasAnual = [];
+	$vendasMensal = [];
+
 	for ($i=1; $i <= 12; $i++) { 
 		array_push($vendasAnual, getQuantidadeVendas($colaborador['matricula'],date('Y-').$i.'-01',date('Y-').$i.date('-t'))['quantidade']);
 	}
+	
+	$vendasMensal = getVendasMensais(date('m'),$colaborador['matricula']);
+
+	function getVendasMensais($mes, $matricula){
+		$vendas = [];
+		for($i=1;$i <= 31;$i++){
+			array_push($vendas, getQuantidadeVendas($matricula,date('Y').'-'.$mes.'-'.$i,date('Y').'-'.$mes.'-'.$i)['quantidade']);
+		}
+		return $vendas;
+	}
+
+
 	function subtrairData($dataInicial, $dias){
 		$dataInicial->sub(new DateInterval('P'.$dias.'D'));
 		return $dataInicial->format('Y-m-d');
@@ -82,7 +96,7 @@
 				label: 'Vendas',
 				backgroundColor:'rgb(255, 99, 132)',
 				borderColor: 'rgb(255, 99, 132)',
-				data: <?php echo json_encode($vendasAnual)?>,
+				data: <?php echo json_encode($vendasAnual);?>,
 			}]
 		}
 	});
@@ -98,7 +112,7 @@
 				label: 'Vendas',
 				backgroundColor:'rgb(255, 99, 132)',
 				borderColor: 'rgb(255, 99, 132)',
-				data: [0,10,20,30,15,0,10,20,30,15,23,12,0,10,20,30,15,23,60,0,10,20,30,15,23,60,0,10,20,30,15,23,45,0,10,20,30,15,23,60,60,]
+				data: <?php echo json_encode($vendasMensal); ?>
 			}]
 		}
 	});
