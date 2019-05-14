@@ -62,6 +62,25 @@
         return $vendas;
     }
 
+    function getTodasVendas($dataInicio, $dataFim){
+        $con = conectar();
+        $sql = "SELECT sum(quantidade) as quantidade, sum(valor) as valor
+                FROM venda
+                WHERE (data between :data_inicio and :data_fim)";
+        $prepare = $con->prepare($sql);
+        $prepare->execute([
+            'data_inicio'=>$dataInicio,
+            'data_fim' => $dataFim
+        ]);
+        $vendas = $prepare->fetch();
+        
+        if(is_null($vendas['quantidade']))
+        {
+            return ['quantidade'=>0,'valor'=>0];
+        }
+        return $vendas;
+    }
+
     function getMediaVendas($matricula, $dataInicio, $dataFim){
         $con = conectar();
         $sql = "SELECT avg(quantidade) as quantidade, avg(valor) as valor
@@ -76,4 +95,6 @@
         ]);
         return $prepare->fetch();
     }
+
+
 ?>

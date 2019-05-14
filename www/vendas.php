@@ -2,22 +2,28 @@
 	include("./modelos/header.php");
 	require_once('modulos/colaborador.php');
 	
+	checkarAutorizacao([ADMIN]);
+
 	$colaborador = getUserByToken($_COOKIE['_session']);
+	$colaboradores = procurarTodosColaboradores();
+
 	$hoje = date('Y-m-d');
 
-	$vendasAnual = [];
-	$vendasMensal = [];
+	$vendasAnual = getVendasAnuais('2019');
+	$vendasMensal = getVendasMensais(date('m'));
 
-	for ($i=1; $i <= 12; $i++) { 
-		array_push($vendasAnual, getQuantidadeVendas($colaborador['matricula'],date('Y-').$i.'-01',date('Y-').$i.date('-t'))['quantidade']);
+	function getVendasAnuais($ano){
+		$vendas = [];
+		for ($i=1; $i <= 12; $i++) { 
+			array_push($vendas, getTodasVendas($ano.'-'.$i.'-01',$ano.'-'.$i.date('-t'))['quantidade']);
+		}
+		return $vendas;
 	}
-	
-	$vendasMensal = getVendasMensais(date('m'),$colaborador['matricula']);
 
-	function getVendasMensais($mes, $matricula){
+	function getVendasMensais($mes){
 		$vendas = [];
 		for($i=1;$i <= 31;$i++){
-			array_push($vendas, getQuantidadeVendas($matricula,date('Y').'-'.$mes.'-'.$i,date('Y').'-'.$mes.'-'.$i)['quantidade']);
+			array_push($vendas, getTodasVendas(date('Y').'-'.$mes.'-'.$i,date('Y').'-'.$mes.'-'.$i)['quantidade']);
 		}
 		return $vendas;
 	}
@@ -29,33 +35,30 @@
 	}
 ?>
 <div class="container-fluid bg-white pt-3 pb-1 mb-3">
-	<p class="text-center mb-4 font-weight-bold">Minhas Vendas</p>
-	<div class="btn-group d-block text-center pb-3">
-		<?php
-			if(in_array($colaborador['permissao'], [ADMIN])){
-				echo '
-				<button type="button" class="btn btn-primary"><a class="text-white" href="registrar-venda.php">Registrar Venda</a></button>
-				<button type="button" class="btn btn-primary"><a class="text-white" href="solicitar-entrega.php">Solicitar Entrega</a></button>
-				';
-			}else{
-				echo '
-				<button type="button" class="btn btn-primary"><a class="text-white" href="registrar-venda.php">Registrar Venda</a></button>
-				';
-			}
-		?>
-		
-	</div>
+	<p class="h3 text-center mb-4 font-weight-bold">Vendas</p>
 </div>
 <div class="container-fluid">
 	<div>
+		<div class="container my-3">
+				<?php
+					for($i=0;$i<count($colaboradores);$i++){
+						if($colaboradores[$i]['cargo'] == 'vendedor'){
+							echo "
+							<div class='custom-control custom-checkbox'>
+								<input class='custom-control-input' type='checkbox' id='colaborador-".$i."' value=".$colaboradores[$i]['matricula']."></input>
+								<label class='custom-control-label' for='colaborador-".$i."'>".$colaboradores[$i]['nome']
+								."</label>
+							</div>";
+						}
+					}
+				?>
+			</div>
 		<div class="container m-0 bg-white py-3">
 			<p class="font-weight-bold h5 text-left">Lucro do Mês</p>
 			<p class="text-right font-weight-bold h4">
 				<?php
 					echo'R$'.
-					getQuantidadeVendas(
-						$colaborador['matricula'],
-						substr($hoje, 0,7).'-01',$hoje)['valor'];
+					getTodasVendas(substr($hoje, 0,7).'-01',$hoje)['valor'];
 				?>
 			<p>
 		</div>
@@ -64,9 +67,7 @@
 			<p class="text-right h4">
 				<?php
 					echo'R$'.
-					getQuantidadeVendas(
-						$colaborador['matricula'],
-						substr($hoje, 0,7).'-01',$hoje)['valor'];
+					getTodasVendas(substr($hoje, 0,7).'-01',$hoje)['valor'];
 				?>
 			</p>
 		</div>
@@ -74,9 +75,7 @@
 			<span>Total de Vendas no Mês</span>
 			<p class="text-right h4">
 				<?php
-					echo getQuantidadeVendas(
-						$colaborador['matricula'],
-						substr($hoje, 0,7).'-01',$hoje)['quantidade'];
+					echo getTodasVendas(substr($hoje, 0,7).'-01',$hoje)['quantidade'];
 				?>
 			</p>
 		</div>

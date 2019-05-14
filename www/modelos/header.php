@@ -1,3 +1,27 @@
+<?php
+	require_once('modulos/config.php');
+
+	
+	function showMenu(){
+		require_once('modulos/colaborador.php');
+		$colaborador = getUserByToken($_COOKIE['_session']);
+		$menu = [];
+		array_push($menu, ['nome'=>'Início','url'=>'colaborador.php']);
+		array_push($menu, ['nome'=>'Vendas','url'=>'minhas-vendas.php']);
+		if(in_array($colaborador['permissao'], [ADMIN])){
+			array_push($menu, ['nome'=>'Estoque','url'=>'estoque.php']);
+			array_push($menu, ['nome'=>'Gerenciar Colaboradores','url'=>'colaboradores.php']);
+		}
+
+		$html = "";
+		
+		for ($i=0; $i < count($menu);$i++) {
+			$html .= '<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./'.$menu[$i]['url'].'">'.$menu[$i]['nome'].'</a></li>';
+		}
+		return $html;
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -18,20 +42,7 @@
 			<nav id="navMobile" class="collapse navbar-collapse">
 				<img alt="imagem do usuário" src="./galeria/default-user.png" class="rounded-circle m-4 text-white d-block d-xl-none" width="20%">
 				<ul class="navbar-nav w-100 list-unstyled">
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./colaborador.php">Início</a></li>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left"
-						href="./registro-ponto.php">Registro de Ponto</a></li>
-					<div class="dropdown">
-						<button type="button" class="btn btn-success pl-4 dropdown-toggle w-100 text-left" data-toggle="dropdown">Vendas</button>
-						<ul class="dropdown-menu">
-							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./minhas-vendas.php">Minhas Vendas</a></li>
-							<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./registrar-venda.php">Registrar Venda</a></li>
-							<li><a href="./solicitar-entrega.php" class="text-white pl-4 btn btn-success nav-link text-left">Solicitar Entrega</a></li>
-							<li><a href="./entregas.php" class="text-white pl-4 btn btn-success nav-link text-left">Entregas</a></li>
-						</ul>
-					</div>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./estoque.php">Gerenciar Estoque</a></li>
-					<li class="nav-item"><a class="text-white pl-4 btn btn-success nav-link text-left" href="./colaboradores.php">Gerenciar Colaboradores</a></li>
+					<?php echo showMenu(); ?>
 				</ul>
 			</nav>
 		</header>
