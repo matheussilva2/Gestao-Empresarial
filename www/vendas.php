@@ -40,19 +40,19 @@
 <div class="container-fluid">
 	<div>
 		<div class="container my-3">
+			<select class='custom-control custom-select' id="colaborador-selecionado">
+				<option value="0" selected>Todos</option>
 				<?php
 					for($i=0;$i<count($colaboradores);$i++){
 						if($colaboradores[$i]['cargo'] == 'vendedor'){
 							echo "
-							<div class='custom-control custom-checkbox'>
-								<input class='custom-control-input' type='checkbox' id='colaborador-".$i."' value=".$colaboradores[$i]['matricula']."></input>
-								<label class='custom-control-label' for='colaborador-".$i."'>".$colaboradores[$i]['nome']
-								."</label>
-							</div>";
+								<option value='".$colaboradores[$i]['matricula']."'>".$colaboradores[$i]['nome']."</option>
+							";
 						}
 					}
 				?>
-			</div>
+			</select>
+		</div>
 		<div class="container m-0 bg-white py-3">
 			<p class="font-weight-bold h5 text-left">Lucro do Mês</p>
 			<p class="text-right font-weight-bold h4">
@@ -90,6 +90,12 @@
 		<canvas id="vendasMensal"></canvas>
 	</div>
 </div>
+
+<!-- SCRIPTS --> 
+<?php
+	include("./modelos/footer.php");
+?>
+
 <script src="./modulos/cookiemanager.js"></script>
 <script>
 	if(getCookie('_session') != false){
@@ -100,6 +106,7 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
+	var vendasAnual = [];
 	var graficoVendasCtx = document.getElementById("vendasAnual").getContext('2d');
 	var graficoVendas = new Chart(graficoVendasCtx,{
 		type: 'bar',
@@ -110,10 +117,13 @@
 				label: 'Vendas',
 				backgroundColor:'rgb(255, 99, 132)',
 				borderColor: 'rgb(255, 99, 132)',
-				data: <?php echo json_encode($vendasAnual);?>,
+				data: <?php echo json_encode($vendasAnual)?>,
 			}]
 		}
 	});
+	function atualizarVendasAnual(){
+		vendasAnual = <?php echo json_encode($vendasAnual);?>;
+	}
 </script>
 <script>
 	var graficoVendasCtx = document.getElementById("vendasMensal").getContext('2d');
@@ -126,11 +136,15 @@
 				label: 'Vendas',
 				backgroundColor:'rgb(255, 99, 132)',
 				borderColor: 'rgb(255, 99, 132)',
-				data: <?php echo json_encode($vendasMensal); ?>
+				data: <?php echo json_encode($vendasMensal)?>
 			}]
 		}
 	});
+	function atualizarVendasMensal(){
+		vendasMensal = <?php echo json_encode($vendasMensal); ?>;
+	}
+
+	$("#colaborador-selecionado").bind('input', function(){
+		alert($(this).val());
+	});
 </script>
-<?php
-	include("./modelos/footer.php");
-?>
