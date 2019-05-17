@@ -19,15 +19,30 @@
 		}
 		return $vendas;
 	}
-
+	function converterLucro($v){
+		return $v * 0.7;
+	}
 	function getVendasMensais($mes){
 		$vendas = [];
 		for($i=1;$i <= 31;$i++){
 			array_push($vendas, getTodasVendas(date('Y').'-'.$mes.'-'.$i,date('Y').'-'.$mes.'-'.$i)['quantidade']);
 		}
+		var_dump($vendas);echo "<hr>";
+		$vendas = array_map("converterLucro", $vendas);
+		var_dump($vendas);
 		return $vendas;
 	}
 
+	function filtrarVendasMensais($mes, $matricula){
+		$vendas = [];
+		for($i=1;$i <= 31;$i++){
+			array_push($vendas,
+				getQuantidadeVendas(date('Y').'-'.$mes.'-'.$i,date('Y').'-'.$mes.'-'.$i)['quantidade']
+			);
+		}
+		array_map(function($v){$v *= 0.7;} , $vendas);
+		return $vendas;
+	}
 
 	function subtrairData($dataInicial, $dias){
 		$dataInicial->sub(new DateInterval('P'.$dias.'D'));
@@ -54,28 +69,28 @@
 			</select>
 		</div>
 		<div class="container m-0 bg-white py-3">
-			<p class="font-weight-bold h5 text-left">Lucro do Mês</p>
-			<p class="text-right font-weight-bold h4">
-				<?php
-					echo'R$'.
-					getTodasVendas(substr($hoje, 0,7).'-01',$hoje)['valor'];
-				?>
-			<p>
-		</div>
-		<div class="container m-0 py-3 bg-white mt-3">
-			<span>Total de Vendas</span>
+			<p class="text-left">Lucro do Mês</p>
 			<p class="text-right h4">
 				<?php
-					echo'R$'.
-					getTodasVendas(substr($hoje, 0,7).'-01',$hoje)['valor'];
+					echo 'R$'.
+					getTodasVendas(substr($hoje, 0,7).'-01',$hoje)['valor']*0.7;
 				?>
-			</p>
+			<p>
 		</div>
 		<div class="container m-0 py-3 bg-white mt-3">
 			<span>Total de Vendas no Mês</span>
 			<p class="text-right h4">
 				<?php
 					echo getTodasVendas(substr($hoje, 0,7).'-01',$hoje)['quantidade'];
+				?>
+			</p>
+		</div>
+		<div class="container m-0 py-3 bg-white mt-3">
+			<span>Lucro Total</span>
+			<p class="text-right h4">
+				<?php
+					echo 'R$'.
+					getTodasVendas('2000-01-01', '2100-01-01')['valor'];
 				?>
 			</p>
 		</div>
@@ -117,7 +132,7 @@
 				label: 'Vendas',
 				backgroundColor:'rgb(255, 99, 132)',
 				borderColor: 'rgb(255, 99, 132)',
-				data: <?php echo json_encode($vendasAnual)?>,
+				data: <?php echo json_encode($vendasAnual);?>,
 			}]
 		}
 	});
@@ -136,7 +151,7 @@
 				label: 'Vendas',
 				backgroundColor:'rgb(255, 99, 132)',
 				borderColor: 'rgb(255, 99, 132)',
-				data: <?php echo json_encode($vendasMensal)?>
+				data: <?php echo json_encode($vendasMensal);?>
 			}]
 		}
 	});
@@ -145,6 +160,7 @@
 	}
 
 	$("#colaborador-selecionado").bind('input', function(){
-		alert($(this).val());
+		atualizarVendasMensal();
 	});
+
 </script>
