@@ -46,11 +46,6 @@ CREATE TABLE IF NOT EXISTS `colaborador` (
 -- Extraindo dados da tabela `colaborador`
 --
 
-INSERT INTO `colaborador` (`matricula`, `cpf`, `nome`, `senha`, `nascimento`, `rg`, `ctps`, `cargo`) VALUES
-(10553, '12859896430', 'MATHEUS SILVA DO NASCIMENTO', 'b68463bd1ed5a210161078781afbcc3b', '1998-10-28', '39344142', '0000000', 'programador'),
-(10554, '06102208455', 'ALESSANDRO BENTO DOS SANTOS', '6543b23e398c49f206356349a0ea49cc', '1974-02-06', '40711536', '000000000', 'gerente'),
-(10555, '13041477467', 'MATEUS DA FRANÇA JUCÁ', 'e9ed0e1b10d53924daccc6e6051b1987', '2001-11-10', '40009173', '000000000', 'vendedor'),
-(10558, '10240061403', 'RUBENS DOS SANTOS SILVA', 'e9ed0e1b10d53924daccc6e6051b1987', '2001-04-05', '39605795', '000', 'vendedor');
 
 -- --------------------------------------------------------
 
